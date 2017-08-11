@@ -1,0 +1,19 @@
+version: '3'
+services:
+  test:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9300
+  elasticsearch:
+    image: elasticsearch:2.1
+    command: "elasticsearch -Des.cluster.name=test"
+    ports:
+      - "127.0.0.1:9200:9200"
+      - "127.0.0.1:9300:9300"
+    links:
+      - test
+    logging:
+      driver: none
